@@ -150,13 +150,15 @@
 (defprotocol Evaluate
   (evaluate [x env]))
 
+#?(:clj
+   (extend-protocol Evaluate
+     Object
+     (evaluate [x _env] x))
+   
 (extend-protocol Evaluate
-  Object
-  (evaluate [x _env] x)
-
   nil
-  (evaluate [x _env] x))
-
+  (evaluate [x _env] x)
+   
 (defrecord Analyzed [f]
   Evaluate
   (evaluate [_this env]
